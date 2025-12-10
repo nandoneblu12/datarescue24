@@ -5,14 +5,563 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>DataRescue24 – Recupero Dati per Privati</title>
   <meta name="description" content="Recupero foto, video, WhatsApp e file da telefoni rotti, PC bloccati e hard disk danneggiati. Servizio dedicato ai privati a Roma e dintorni.">
+  <style>
+    :root {
+      --primary: #1A73E8;
+      --primary-dark: #0B4AA8;
+      --bg: #F5F5F5;
+      --text: #111111;
+      --muted: #666666;
+      --card-bg: #FFFFFF;
+      --radius: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #E3F2FD 0, #F5F5F5 40%, #F5F5F5 100%);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 12px 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-box {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .brand-text-main {
+      font-weight: 700;
+      font-size: 20px;
+    }
+
+    .brand-text-sub {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .cta-header {
+      display: none;
+    }
+
+    @media (min-width: 640px) {
+      .cta-header {
+        display: inline-flex;
+      }
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(26, 115, 232, 0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(26, 115, 232, 0.4);
+    }
+
+    .btn-outline {
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      background: rgba(255, 255, 255, 0.7);
+      color: var(--text);
+    }
+
+    .btn-outline:hover {
+      background: #fff;
+    }
+
+    .btn span {
+      margin-left: 6px;
+      font-size: 16px;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    @media (min-width: 840px) {
+      main {
+        grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.9fr);
+        align-items: center;
+      }
+    }
+
+    .hero {
+      padding: 10px 4px;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(26, 115, 232, 0.08);
+      color: var(--primary-dark);
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+
+    .hero-tag-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #12C16B;
+      box-shadow: 0 0 0 4px rgba(18, 193, 107, 0.15);
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    @media (min-width: 640px) {
+      h1 {
+        font-size: 34px;
+      }
+    }
+
+    h1 span.highlight {
+      color: var(--primary-dark);
+    }
+
+    .hero-sub {
+      font-size: 15px;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .hero-note {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .hero-note strong {
+      color: #0B8043;
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+      font-size: 11px;
+    }
+
+    .badge {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .card-right {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 22px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+      padding: 18px 18px 20px;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(10px);
+    }
+
+    .card-right-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .card-right-sub {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .card-section-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin: 12px 0 6px;
+    }
+
+    .list {
+      list-style: none;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .list li::before {
+      content: "•";
+      color: var(--primary-dark);
+      margin-top: 1px;
+    }
+
+    .price-grid {
+      margin-top: 14px;
+      border-radius: 16px;
+      background: #F9FAFB;
+      padding: 10px 10px 4px;
+      font-size: 12px;
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .price-label {
+      color: var(--muted);
+    }
+
+    .price-value {
+      font-weight: 600;
+      color: var(--primary-dark);
+    }
+
+    .disclaimer {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    section {
+      margin-top: 30px;
+    }
+
+    section h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    @media (min-width: 720px) {
+      .services-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .service-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 12px 12px 14px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.03);
+      border: 1px solid rgba(0, 0, 0, 0.03);
+      font-size: 13px;
+    }
+
+    .service-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .service-desc {
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .service-tag {
+      font-size: 11px;
+      color: var(--primary-dark);
+      font-weight: 600;
+    }
+
+    .contact-section {
+      margin-top: 32px;
+      padding: 18px 14px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #1A73E8, #0B4AA8);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    @media (min-width: 720px) {
+      .contact-section {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    .contact-main {
+      max-width: 520px;
+    }
+
+    .contact-main h2 {
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+
+    .contact-main p {
+      font-size: 13px;
+      opacity: 0.95;
+    }
+
+    .contact-details {
+      font-size: 13px;
+    }
+
+    .contact-details div {
+      margin-bottom: 4px;
+    }
+
+    .contact-label {
+      opacity: 0.8;
+      margin-right: 4px;
+    }
+
+    footer {
+      margin-top: 24px;
+      font-size: 11px;
+      color: var(--muted);
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-  <h1>DataRescue24 – Recupero dati per privati</h1>
-  <p>Servizio completo di recupero dati: foto, video, WhatsApp, documenti e file da telefoni rotti, PC non avviabili, hard disk, USB e molto altro.</p>
-  <p><strong>Contatti:</strong><br>
-     WhatsApp: +39 392 383 3189<br>
-     Email: datarescue24@gmail.com<br>
-     Zona: Roma e dintorni
-  </p>
+  <div class="page">
+    <header>
+      <div class="brand">
+        <div class="logo-box">DR</div>
+        <div>
+          <div class="brand-text-main">DataRescue24</div>
+          <div class="brand-text-sub">Recupero dati per privati – Roma e dintorni</div>
+        </div>
+      </div>
+      <button class="btn btn-primary cta-header" onclick="window.location.href='https://wa.me/393923833189'">
+        Contatta su WhatsApp<span>↗</span>
+      </button>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-tag">
+          <span class="hero-tag-dot"></span>
+          Recupero dati rapido per privati – Foto, Video, WhatsApp, File
+        </div>
+        <h1>
+          I tuoi <span class="highlight">ricordi</span> non sono persi.<br/>
+          Li recuperiamo noi.
+        </h1>
+        <p class="hero-sub">
+          Recupero foto, video, WhatsApp e documenti da telefoni rotti, PC che non si avviano,
+          hard disk e memorie esterne. Servizio dedicato ai privati su Roma e dintorni, con
+          prezzi chiari e assistenza rapida.
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="window.location.href='https://wa.me/393923833189'">
+            Scrivimi su WhatsApp<span>💬</span>
+          </button>
+          <button class="btn btn-outline" onclick="document.getElementById('servizi').scrollIntoView({behavior:'smooth'})">
+            Vedi servizi e prezzi
+          </button>
+        </div>
+        <p class="hero-note">
+          <strong>Paghi solo se il recupero va a buon fine</strong> nei casi più complessi.
+        </p>
+        <div class="hero-badges">
+          <div class="badge">Massima privacy</div>
+          <div class="badge">Preventivo gratuito</div>
+          <div class="badge">Nessun linguaggio tecnico</div>
+        </div>
+      </section>
+
+      <aside class="card-right">
+        <div class="card-right-title">Problemi più comuni che risolvo</div>
+        <div class="card-right-sub">
+          Ecco alcuni esempi di casi che gestisco ogni giorno.
+        </div>
+
+        <div class="card-section-title">📱 Telefono / WhatsApp</div>
+        <ul class="list">
+          <li>Telefono rotto o che non si accende</li>
+          <li>WhatsApp perso dopo cambio telefono</li>
+          <li>Memoria piena e foto non accessibili</li>
+        </ul>
+
+        <div class="card-section-title">💻 PC / Hard Disk</div>
+        <ul class="list">
+          <li>PC che non avvia ma con dati importanti</li>
+          <li>File cancellati per errore</li>
+          <li>Chiavette USB e schede SD danneggiate</li>
+        </ul>
+
+        <div class="card-section-title">🔐 Account online</div>
+        <ul class="list">
+          <li>Accesso perso a Google / iCloud</li>
+          <li>Problemi con account email o social</li>
+        </ul>
+
+        <div class="price-grid">
+          <div class="price-row">
+            <div class="price-label">Foto/video da telefono rotto</div>
+            <div class="price-value">60–150€</div>
+          </div>
+          <div class="price-row">
+            <div class="price-label">Recupero WhatsApp</div>
+            <div class="price-value">40–90€</div>
+          </div>
+          <div class="price-row">
+            <div class="price-label">Dati da PC/HDD non avviabile</div>
+            <div class="price-value">50–120€</div>
+          </div>
+          <div class="price-row">
+            <div class="price-label">File cancellati (USB/SD)</div>
+            <div class="price-value">20–60€</div>
+          </div>
+        </div>
+        <div class="disclaimer">
+          I prezzi dipendono dal tipo di danno e dalla quantità di dati. Preventivo preciso prima di iniziare il lavoro.
+        </div>
+      </aside>
+    </main>
+
+    <section id="servizi">
+      <h2>Servizi di recupero dati</h2>
+      <p style="font-size:13px; color:var(--muted); margin-bottom:10px;">
+        Tutti i servizi sono pensati per utenti privati: linguaggio semplice, spiegazioni chiare,
+        nessuna sorpresa nei costi.
+      </p>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-title">Recupero foto e video da telefono rotto</div>
+          <div class="service-desc">
+            Recupero immagini e video da smartphone che non si accendono più, bloccati o danneggiati.
+          </div>
+          <div class="service-tag">Da 60€ a 150€</div>
+        </div>
+        <div class="service-card">
+          <div class="service-title">Recupero WhatsApp</div>
+          <div class="service-desc">
+            Conversazioni e media persi dopo cambio telefono o formattazione.
+          </div>
+          <div class="service-tag">Da 40€ a 90€</div>
+        </div>
+        <div class="service-card">
+          <div class="service-title">Dati da PC / hard disk</div>
+          <div class="service-desc">
+            File e documenti recuperati da PC che non avviano o dischi non leggibili.
+          </div>
+          <div class="service-tag">Da 50€ a 120€</div>
+        </div>
+        <div class="service-card">
+          <div class="service-title">File cancellati (USB, SD, dischi)</div>
+          <div class="service-desc">
+            Recupero di foto, video e documenti eliminati per errore da memorie esterne.
+          </div>
+          <div class="service-tag">Da 20€ a 60€</div>
+        </div>
+        <div class="service-card">
+          <div class="service-title">Ripristino account online</div>
+          <div class="service-desc">
+            Aiuto per recuperare l’accesso ad account Google, iCloud, email e social.
+          </div>
+          <div class="service-tag">Da 30€ a 60€</div>
+        </div>
+        <div class="service-card">
+          <div class="service-title">Trasferimento e backup dati</div>
+          <div class="service-desc">
+            Passaggio dati da un dispositivo all’altro e creazione di un backup sicuro.
+          </div>
+          <div class="service-tag">Da 20€ a 50€</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-section">
+      <div class="contact-main">
+        <h2>Diagnosi gratuita in pochi minuti</h2>
+        <p>
+          Scrivimi su WhatsApp spiegando cosa è successo: modello del dispositivo e cosa ti serve recuperare.
+          Ti rispondo con un preventivo chiaro e le possibilità di successo.
+        </p>
+      </div>
+      <div class="contact-details">
+        <div><span class="contact-label">📱 WhatsApp:</span>+39 392 383 3189</div>
+        <div><span class="contact-label">✉️ Email:</span>datarescue24@gmail.com</div>
+        <div><span class="contact-label">📍 Zona:</span>Roma e dintorni</div>
+      </div>
+    </section>
+
+    <footer>
+      DataRescue24 – Servizio di recupero dati per privati a Roma e dintorni. Prezzi indicativi: preventivo esatto dopo diagnosi del caso.
+    </footer>
+  </div>
 </body>
 </html>
+
